@@ -70,7 +70,9 @@ return array(
           ['script' =>
           "
         paypal.Button.render({
+//https://developer.paypal.com/docs/integration/direct/express-checkout/integration-jsv4/upgrade-integration/
 
+// full options for the script https://developer.paypal.com/docs/integration/direct/express-checkout/integration-jsv4/add-paypal-button/
             // @todo - ahem.
             env: 'sandbox', //'production', // Or 'sandbox',
 
