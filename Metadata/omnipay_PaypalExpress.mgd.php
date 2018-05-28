@@ -78,6 +78,10 @@ return array(
               var token = 'blah';
               console.log(token);
                 /* Set up the payment here */
+                // @todo - look at a promise here. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+                // Note this api call DOES work in isolation (for admin user)
+                // @todo add qfKey check of some sort for when not admin user
+                // to prevent DDOS type thingee.
                  CRM.api3('PaymentProcessor', 'preapprove', {
                    'payment_processor_id' : CRM.vars.omnipay.paymentProcessorId,
                    // @todo - hard coded for now...
@@ -93,6 +97,7 @@ return array(
 
             onAuthorize: function(data, actions) {
                 /* Execute the payment here */
+                // @todo - do we need to do this? Feel like we will confirm via php for our flow.
             }
 
         }, '#paypal-button');
