@@ -40,7 +40,7 @@
  */
 return array(
   array(
-    'name' => 'OmniPay - PayPal Express',
+    'name' => 'OmniPay - PayPal_Express',
     'entity' => 'payment_processor_type',
     'params' => array(
       'version' => 3,
@@ -77,27 +77,24 @@ return array(
             env: 'sandbox', //'production', // Or 'sandbox',
 
             payment: function(data, actions) {
-              var token = 'blah';
-              console.log(token);
-                /* Set up the payment here */
-                // @todo - look at a promise here. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
-                // Note this api call DOES work in isolation (for admin user)
-                // @todo add qfKey check of some sort for when not admin user
-                // to prevent DDOS type thingee.
+              return new paypal.Promise(function(resolve, reject) {
                  CRM.api3('PaymentProcessor', 'preapprove', {
                    'payment_processor_id' : CRM.vars.omnipay.paymentProcessorId,
                    // @todo - hard coded for now...
                    'amount' : 10
                  },
                  ).done(function(result) {
-                 console.log(result);
-                   token = result.token;
-                   return token;
-                });
-                console.log(token);
+                 
+                   token = result['values'][0]['token'];
+                   resolve(token);
+                })
+                .fail(function(err)  { reject(err); });
+              });
             },
 
             onAuthorize: function(data, actions) {
+            console.log('auth called');
+            console.log(data);
                 /* Execute the payment here */
                 // @todo - do we need to do this? Feel like we will confirm via php for our flow.
             }

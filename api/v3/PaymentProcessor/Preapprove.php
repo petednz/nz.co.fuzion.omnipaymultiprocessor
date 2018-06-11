@@ -15,7 +15,7 @@ function civicrm_api3_payment_processor_preapprove($params) {
   if (is_a($result, 'CRM_Core_Error')) {
     throw API_Exception('Payment failed');
   }
-  return civicrm_api3_create_success(array($result['pre_approval_params']), $params);
+  return civicrm_api3_create_success(array($result['pre_approval_parameters']), $params);
 }
 
 /**
